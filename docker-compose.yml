@@ -1,0 +1,31 @@
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: mygpo
+      PGUSER: mygpo
+      POSTGRES_USER: mygpo
+      POSTGRES_PASSWORD: mygpo
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # ports:
+    # - '5432:5432'
+
+
+  redis:
+    image: redis:alpine
+
+volumes:
+  postgres_data:
